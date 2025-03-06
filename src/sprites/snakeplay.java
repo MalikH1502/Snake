@@ -14,7 +14,7 @@ public class snakeplay extends apple {
     public void setDef(){
         int x = 150;
         int y = 100;
-        int speed = 5;
+        int speed = 7;
     }
     
 }
