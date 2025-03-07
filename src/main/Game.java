@@ -9,11 +9,11 @@ import javax.swing.JPanel;
 import sprites.snakeplay;
 
 public class Game extends JPanel implements Runnable{
-    int originalSize = 64;
+    public int originalSize = 64;
     int maxRows = 16;
     int maxCols = 12;
-    int screenWidth = originalSize * maxRows;
-    int screenHeight = originalSize * maxCols;
+   public int screenWidth = originalSize * maxRows;
+   public int screenHeight = originalSize * maxCols;
 
     int fps = 60;
 
@@ -23,8 +23,8 @@ public class Game extends JPanel implements Runnable{
     int playery = 100;
     int playerspeed = 5;
 
-    Input inputh = new Input();
-    Thread gameTime;
+    public Input inputh = new Input();
+   public Thread gameTime;
     snakeplay snake = new snakeplay(this, inputh);
 
     public Game(){
@@ -53,32 +53,18 @@ public class Game extends JPanel implements Runnable{
             update();
             repaint();
             double remainingTime = nextFrameTime - System.currentTimeMillis();
-            try {
-                Thread.sleep((long)remainingTime);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if (remainingTime > 0) {
+                try {
+                    Thread.sleep((long) remainingTime);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
             nextFrameTime = System.currentTimeMillis() + fpsInterval;
         }
     }
     public void update(){
-        if (inputh.WPressed == true){
-            playery -= playerspeed;
-            System.out.println("W Pressed");
-        }
-        if (inputh.SPressed == true){
-            playery += playerspeed;
-        }
-        if (inputh.APressed == true){
-            playerx -= playerspeed;
-        }
-        if (inputh.DPressed == true){
-            playerx += playerspeed;
-        }
-        if (playerx <0 || playerx > screenWidth - 64 || playery < 0 || playery > screenHeight - 64){
-            gameTime = null;
-            
-        }
+        snake.update();
         
     }
 
@@ -86,9 +72,8 @@ public class Game extends JPanel implements Runnable{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-
-        g2d.setColor(Color.WHITE);
-        g2d.fillRect(playerx, playery, originalSize, originalSize);
+        snake.draw(g2d);
+       
         g2d.dispose();
         }
     }
