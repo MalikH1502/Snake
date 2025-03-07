@@ -44,7 +44,6 @@ public class snakeplay extends apple {
     public void update(){
         if (game.inputh.WPressed == true){
             y -= speed;
-            System.out.println("W Pressed");
         }
         if (input.SPressed == true){
             y += speed;
